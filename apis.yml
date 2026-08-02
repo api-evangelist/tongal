@@ -1,8 +1,14 @@
 aid: tongal
 name: Tongal
-description: 'Tongal is a company surfaced as a portfolio company of insight-partners and added to the
-  API Evangelist network as a stub for enrichment. Sector: consumer. This profile is a lead awaiting the
-  enrichment pipeline.'
+description: >-
+  Tongal is a Santa Monica, California creative content platform ("your studio
+  on demand") that connects brands and studios with a global community of
+  writers, directors, and production companies. Founded in 2009 and backed by
+  Insight Partners, Tongal runs branded video, advertising, and
+  original-content projects through ideation, pitch, and production phases for
+  clients such as LEGO, Procter & Gamble, Unilever, NASA, and Lucasfilm. Tongal
+  publishes no public developer API — api.tongal.com is the private GraphQL
+  backing API for its web app, with introspection disabled.
 url: https://raw.githubusercontent.com/api-evangelist/tongal/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -10,12 +16,29 @@ x-backed-by:
 - insight-partners
 x-tier: stub
 x-tier-reason: portfolio-lead
+accessModel:
+  pricing: unknown
+  onboarding: unknown
+  trial: false
+  try_now: false
+  public: false
+  label: Unknown
+  confidence: low
+  source: []
+  generated: '2026-07-22'
+  method: derived
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-21'
+image: https://avatars.githubusercontent.com/u/2958380?v=4
 tags:
 - Company
 - Consumer
+- Video
+- Creative
+- Crowdsourcing
+- Content Production
+- Marketing
 apis: []
 maintainers:
 - FN: Kin Lane
@@ -24,4 +47,29 @@ maintainers:
   email: info@apis.io
 common:
 - type: Website
-  url: http://www.tongal.com/
+  url: https://tongal.com/
+- type: Blog
+  url: https://tongal.com/blog
+- type: Support
+  url: https://help.tongal.com/s/
+- type: TermsOfService
+  url: https://tongal.com/about/terms-of-use
+- type: PrivacyPolicy
+  url: https://tongal.com/about/privacy
+- type: Login
+  url: https://tongal.com/auth/login
+- type: SignUp
+  url: https://tongal.com/auth/register
+- type: GitHubOrganization
+  url: https://github.com/tongal
+- type: WellKnown
+  url: well-known/tongal-well-known.yml
+- type: LLMsTxt
+  url: llms/tongal-llms.txt
+- type: DomainSecurity
+  url: security/tongal-domain-security.yml
+x-enrichment:
+  date: '2026-07-21'
+  status: minimal
+  artifacts_added: 3
+  pass: local-v1

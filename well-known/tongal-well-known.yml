@@ -1,0 +1,52 @@
+generated: '2026-07-21'
+method: searched
+source: live HTTP probes of tongal.com and api.tongal.com
+note: >-
+  tongal.com is a single-page app with a catch-all route that returns the HTML
+  shell (200 text/html) for every path, so 200s on that host do NOT indicate a
+  real well-known document; no raw files were saved because no genuine
+  documents exist. api.tongal.com (the private browser-backing API) returns
+  real 404s for the entire discovery surface.
+hosts:
+- host: https://tongal.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    content: spa-html-shell (not a security.txt)
+  - path: /.well-known/openid-configuration
+    status: 200
+    content: spa-html-shell (not an OIDC document)
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    content: spa-html-shell
+  - path: /.well-known/api-catalog
+    status: 200
+    content: spa-html-shell
+  - path: /.well-known/ai-plugin.json
+    status: 200
+    content: spa-html-shell
+  - path: /llms.txt
+    status: 200
+    content: spa-html-shell (no llms.txt published)
+  - path: /robots.txt
+    status: 200
+    content: genuine robots.txt (text/plain, sitemap + crawl rules)
+  - path: /sitemap.xml
+    status: 200
+    content: genuine sitemap.xml (marketing/app pages, no developer surface)
+- host: https://api.tongal.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /openapi.json
+    status: 404
+  - path: /swagger.json
+    status: 404
+  - path: /v3/api-docs
+    status: 404

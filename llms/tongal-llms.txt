@@ -1,0 +1,26 @@
+# Tongal
+
+> Tongal is a Santa Monica, California creative content platform ("your studio on demand") that connects brands and studios with a global community of writers, directors, and production companies. Founded in 2009 by James DeJulio, Rob Salvatore, and Mark Burrell and backed by Insight Partners (2012), Tongal runs branded video, advertising, and original-content projects through ideation, pitch, and production phases for clients such as LEGO, Procter & Gamble, Unilever, NASA, and Lucasfilm. Tongal publishes no public developer API: api.tongal.com exists only as the private backing API for the tongal.com web app (CORS-locked to tongal.com, session-cookie auth, no published spec or discovery surface).
+
+## Company
+
+- [Website](https://tongal.com/): Tongal — Welcome to Your Studio on Demand (single-page app)
+- [How it works](https://tongal.com/how): The Tongal project model (ideation, pitch, production)
+- [Blog](https://tongal.com/blog): Tongal blog
+- [Help Center](https://help.tongal.com/s/): Tongal support (Salesforce Experience Cloud)
+- [GitHub organization](https://github.com/tongal): Tongal on GitHub (2 public repos, no SDKs or specs)
+- [Terms of Use](https://tongal.com/about/terms-of-use)
+- [Privacy Policy](https://tongal.com/about/privacy)
+
+## API surface
+
+- No public API, developer portal, or API documentation is published.
+- api.tongal.com: private web-app backing API only (no OpenAPI, no /.well-known discovery, all probed paths 404).
+- api.tongal.com/api/graphql: private GraphQL endpoint used by the web app; introspection is disabled (INTROSPECTION_DISABLED) and CORS is locked to tongal.com.
+- No packages on npm, PyPI, or other public registries.
+
+## API Evangelist profile
+
+- [apis.yml](https://raw.githubusercontent.com/api-evangelist/tongal/refs/heads/main/apis.yml): APIs.json profile for Tongal
+- [Domain security](https://raw.githubusercontent.com/api-evangelist/tongal/refs/heads/main/security/tongal-domain-security.yml): probed TLS/DNS posture
+- [Well-known probe index](https://raw.githubusercontent.com/api-evangelist/tongal/refs/heads/main/well-known/tongal-well-known.yml): discovery-surface probe results
