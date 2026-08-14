@@ -29,7 +29,7 @@ accessModel:
   method: derived
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-21'
+modified: '2026-08-13'
 image: https://avatars.githubusercontent.com/u/2958380?v=4
 tags:
 - Company
@@ -62,14 +62,39 @@ common:
   url: https://tongal.com/auth/register
 - type: GitHubOrganization
   url: https://github.com/tongal
-- type: WellKnown
-  url: well-known/tongal-well-known.yml
 - type: LLMsTxt
   url: llms/tongal-llms.txt
 - type: DomainSecurity
   url: security/tongal-domain-security.yml
+- type: Plans
+  url: plans/tongal-plans-pricing.yml
+x-well-known-probe:
+  url: well-known/tongal-well-known.yml
+  note: >-
+    Probe record ONLY — deliberately NOT wired as a `WellKnown` common[] pointer.
+    Every /.well-known/* path on tongal.com returns the SPA catch-all HTML shell and
+    every path on api.tongal.com returns 404, so no well-known document is served.
+    The pointer was removed 2026-08-13; asserting it would credit Tongal with a
+    discovery surface its own probe disproves.
 x-enrichment:
-  date: '2026-07-21'
+  date: '2026-08-13'
   status: minimal
-  artifacts_added: 3
+  artifacts_added: 1
   pass: local-v1
+x-coverage:
+  state: none
+  reason: no-developer-program
+  detail: >-
+    Tongal ships only the end-user tongal.com creative-project platform; its sole live
+    API is a private GraphQL endpoint at api.tongal.com/api/graphql that answers
+    "introspection has been disabled" and backs nothing but its own web app.
+  evidence:
+  - url: https://api.tongal.com/api/graphql
+    status: 200
+  - url: https://api.tongal.com/openapi.json
+    status: 404
+  - url: https://developer.tongal.com/
+    status: 0
+  - url: https://tongal.com/sitemap.xml
+    status: 200
+  checked: '2026-08-13'
