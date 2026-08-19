@@ -1,0 +1,24 @@
+generated: '2026-08-13'
+method: searched
+source: https://tongal.com/ (sitemap.xml walked; no pricing page is published)
+plan_count: 0
+currency: null
+model: quote-only
+note: >-
+  Tongal publishes NO pricing page and NO plan tiers. The sitemap at
+  https://tongal.com/sitemap.xml lists marketing, gallery, case-study and press
+  routes and contains no /pricing entry; https://tongal.com/pricing returns the
+  generic 3899-byte SPA shell (HTTP 200) rather than a pricing page, which on
+  this host is indistinguishable from a route that does not exist. Commercial
+  engagement is a per-project quote: brands scope a project brief with Tongal,
+  creators compete in ideation/pitch/production phases, and the brand pays the
+  award amounts set in that brief. There is no self-serve tier, no published
+  rate card, and no API product to price — see x-coverage in apis.yml.
+plans: []
+evidence:
+- url: https://tongal.com/pricing
+  status: 200
+  finding: SPA catch-all shell (3899 bytes), not a pricing page
+- url: https://tongal.com/sitemap.xml
+  status: 200
+  finding: no pricing route published

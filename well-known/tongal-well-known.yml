@@ -1,52 +1,164 @@
-generated: '2026-07-21'
-method: searched
-source: live HTTP probes of tongal.com and api.tongal.com
+generated: '2026-08-13'
+method: probed
+source: live HTTP probes of tongal.com, api.tongal.com and help.tongal.com
+verdict: no-documents
 note: >-
-  tongal.com is a single-page app with a catch-all route that returns the HTML
-  shell (200 text/html) for every path, so 200s on that host do NOT indicate a
-  real well-known document; no raw files were saved because no genuine
-  documents exist. api.tongal.com (the private browser-backing API) returns
-  real 404s for the entire discovery surface.
+  NO WELL-KNOWN DOCUMENT IS SERVED ON ANY TONGAL HOST. This file records an
+  absence, not a presence, and therefore carries NO `WellKnown` pointer in
+  apis.yml — the pointer was removed on 2026-08-13 because it asserted a
+  discovery surface the probes disprove. tongal.com is a client-rendered
+  single-page app whose catch-all route answers 200 text/html with an identical
+  3899-byte SPA shell for EVERY path, including paths that certainly do not
+  exist; a 200 from that host is a routing artifact and never evidence of a
+  document. api.tongal.com (the private browser-backing API) returns genuine
+  404s across the entire discovery surface. help.tongal.com is a Salesforce
+  Experience Cloud site that answers 401 on /.well-known/*.
+spa_catch_all:
+  host: https://tongal.com
+  behavior: every unmatched path returns HTTP 200 text/html
+  shell_bytes: 3899
+  control_probe:
+    path: /dev/index.html
+    status: 200
+    bytes: 3899
+    note: robots.txt disallows /dev; the path returns the same shell as every other route
 hosts:
 - host: https://tongal.com
   documents:
   - path: /.well-known/security.txt
     status: 200
+    file: null
     content: spa-html-shell (not a security.txt)
   - path: /.well-known/openid-configuration
     status: 200
+    file: null
     content: spa-html-shell (not an OIDC document)
   - path: /.well-known/oauth-authorization-server
     status: 200
+    file: null
     content: spa-html-shell
   - path: /.well-known/api-catalog
     status: 200
+    file: null
     content: spa-html-shell
   - path: /.well-known/ai-plugin.json
     status: 200
+    file: null
     content: spa-html-shell
+  - path: /.well-known/agent-card.json
+    status: 200
+    file: null
+    content: spa-html-shell (NOT an AgentCard — body is HTML, not a JSON object)
+  - path: /.well-known/agent.json
+    status: 200
+    file: null
+    content: spa-html-shell (legacy pre-0.3 path; same shell, no card)
   - path: /llms.txt
     status: 200
+    file: null
     content: spa-html-shell (no llms.txt published)
+  - path: /openapi.json
+    status: 200
+    file: null
+    content: spa-html-shell (not an OpenAPI document)
   - path: /robots.txt
     status: 200
-    content: genuine robots.txt (text/plain, sitemap + crawl rules)
+    file: null
+    content: genuine robots.txt (text/plain, 408 bytes) — disallows /dev, /admin, /search
   - path: /sitemap.xml
     status: 200
-    content: genuine sitemap.xml (marketing/app pages, no developer surface)
+    file: null
+    content: genuine sitemap.xml — marketing/gallery/press pages only, no developer surface
 - host: https://api.tongal.com
   documents:
   - path: /.well-known/security.txt
     status: 404
+    file: null
   - path: /.well-known/openid-configuration
     status: 404
+    file: null
   - path: /.well-known/oauth-authorization-server
     status: 404
+    file: null
   - path: /.well-known/api-catalog
     status: 404
-  - path: /openapi.json
+    file: null
+  - path: /.well-known/agent-card.json
     status: 404
-  - path: /swagger.json
+    file: null
+  - path: /.well-known/agent.json
     status: 404
-  - path: /v3/api-docs
+    file: null
+- host: https://help.tongal.com
+  documents:
+  - path: /.well-known/agent-card.json
+    status: 401
+    file: null
+    content: Salesforce Experience Cloud authentication wall
+contract_discovery:
+  note: >-
+    STEP 0b contract hunt, re-run 2026-08-13 against every known Tongal host. No
+    machine-readable contract of any kind is published. The only live API surface
+    is a private GraphQL endpoint with introspection switched off.
+  rest:
+  - url: https://api.tongal.com/openapi.json
     status: 404
+  - url: https://api.tongal.com/openapi.yaml
+    status: 404
+  - url: https://api.tongal.com/swagger.json
+    status: 404
+  - url: https://api.tongal.com/v1/openapi.json
+    status: 404
+  - url: https://api.tongal.com/api-docs
+    status: 404
+  - url: https://api.tongal.com/docs
+    status: 404
+  - url: https://api.tongal.com/redoc
+    status: 404
+  graphql:
+  - url: https://api.tongal.com/api/graphql
+    status: 200
+    live: true
+    introspection: disabled
+    evidence: >-
+      POST {"query":"{__typename}"} returns {"data":{"__typename":"Query"}} (HTTP 200),
+      proving a live GraphQL server; POST {"query":"{__schema{queryType{name}}}"} returns
+      {"errors":[{"message":"introspection has been disabled",
+      "extensions":{"code":"INTROSPECTION_DISABLED"}}]}.
+    note: >-
+      Private backing API for the tongal.com web app. No SDL is obtainable and none was
+      written — fabricating a schema from observed traffic is out of scope for this
+      pipeline. Nothing is saved to graphql/.
+  - url: https://api.tongal.com/graphql
+    status: 404
+  mcp:
+  - url: https://api.tongal.com/mcp
+    status: 405
+    note: method-not-allowed from the app server; no MCP server
+  - url: https://tongal.com/mcp
+    status: 405
+    note: nginx 405; no MCP server
+  - url: https://mcp.tongal.com/mcp
+    status: 0
+    note: DNS does not resolve
+  developer_hosts:
+  - url: https://developer.tongal.com
+    status: 0
+    note: DNS does not resolve
+  - url: https://docs.tongal.com
+    status: 0
+    note: DNS does not resolve
+  - url: https://developers.tongal.com
+    status: 0
+    note: DNS does not resolve
+  - url: https://status.tongal.com
+    status: 0
+    note: DNS does not resolve
+  github:
+    org: https://github.com/Tongal
+    public_repos: 2
+    finding: >-
+      Neither repo is an API artifact. tongal-fe-extension-pack is a VS Code extension
+      pack for internal front-end tooling (last pushed 2019). `slate` is an UNMODIFIED
+      fork of ringcentral/slate whose source/index.html.md is still the upstream "Kittn
+      API" boilerplate — it documents no Tongal API and must not be read as one.

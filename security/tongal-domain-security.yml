@@ -1,8 +1,8 @@
-generated: '2026-07-21'
+generated: '2026-08-13'
 method: probed
 source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
 hosts:
-- host: www.tongal.com
+- host: tongal.com
   https: true
   tls_version: TLSv1.3
   cert_expires: Jan  8 23:59:59 2027 GMT

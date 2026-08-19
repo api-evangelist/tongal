@@ -1,26 +1,38 @@
 # Tongal
 
-> Tongal is a Santa Monica, California creative content platform ("your studio on demand") that connects brands and studios with a global community of writers, directors, and production companies. Founded in 2009 by James DeJulio, Rob Salvatore, and Mark Burrell and backed by Insight Partners (2012), Tongal runs branded video, advertising, and original-content projects through ideation, pitch, and production phases for clients such as LEGO, Procter & Gamble, Unilever, NASA, and Lucasfilm. Tongal publishes no public developer API: api.tongal.com exists only as the private backing API for the tongal.com web app (CORS-locked to tongal.com, session-cookie auth, no published spec or discovery surface).
+> Tongal is a Santa Monica, California creative content platform ("your studio on demand") that connects brands and studios with a global community of writers, directors, and production companies. Founded in 2009 by James DeJulio, Rob Salvatore, and Mark Burrell and backed by Insight Partners (2013), Tongal runs branded video, advertising, and original-content projects through ideation, pitch, and production phases for clients such as LEGO, Procter & Gamble, Unilever, NASA, and Lucasfilm. Tongal publishes no public developer API: api.tongal.com exists only as the private backing API for the tongal.com web app.
 
 ## Company
 
 - [Website](https://tongal.com/): Tongal — Welcome to Your Studio on Demand (single-page app)
 - [How it works](https://tongal.com/how): The Tongal project model (ideation, pitch, production)
 - [Blog](https://tongal.com/blog): Tongal blog
+- [Press](https://tongal.com/press): Tongal press page
 - [Help Center](https://help.tongal.com/s/): Tongal support (Salesforce Experience Cloud)
-- [GitHub organization](https://github.com/tongal): Tongal on GitHub (2 public repos, no SDKs or specs)
+- [GitHub organization](https://github.com/Tongal): Tongal on GitHub (2 public repos, neither an API artifact)
 - [Terms of Use](https://tongal.com/about/terms-of-use)
 - [Privacy Policy](https://tongal.com/about/privacy)
 
 ## API surface
 
-- No public API, developer portal, or API documentation is published.
-- api.tongal.com: private web-app backing API only (no OpenAPI, no /.well-known discovery, all probed paths 404).
-- api.tongal.com/api/graphql: private GraphQL endpoint used by the web app; introspection is disabled (INTROSPECTION_DISABLED) and CORS is locked to tongal.com.
-- No packages on npm, PyPI, or other public registries.
+Verified by live probe on 2026-08-13. There is no public API.
+
+- No public API, developer portal, API documentation, or machine-readable contract is published.
+- No developer host exists: developer.tongal.com, docs.tongal.com, developers.tongal.com and status.tongal.com do not resolve in DNS.
+- api.tongal.com: private web-app backing API only. Every discovery path (/openapi.json, /openapi.yaml, /swagger.json, /v1/openapi.json, /api-docs, /docs, /redoc, /.well-known/*) returns a genuine 404.
+- api.tongal.com/api/graphql: live private GraphQL endpoint used by the web app. Introspection is disabled (`INTROSPECTION_DISABLED`), so no SDL is obtainable. No schema has been reconstructed or published here.
+- No MCP server (api.tongal.com/mcp and tongal.com/mcp return 405; mcp.tongal.com does not resolve).
+- No A2A agent card. tongal.com answers 200 for /.well-known/agent-card.json, but that is the SPA catch-all returning HTML — not a card. No card was recorded.
+- No packages on npm, PyPI, RubyGems, or crates.io.
+- No published pricing or plans; engagement is a per-project quote.
+
+## Reading tongal.com programmatically
+
+tongal.com is a client-rendered single-page app with a catch-all route: EVERY unmatched path returns HTTP 200 with an identical 3899-byte HTML shell. A 200 from this host is not evidence that a document exists. Only /robots.txt and /sitemap.xml return genuine documents. robots.txt disallows /dev, /admin, /search, /gigs, /mytongal and /resources.
 
 ## API Evangelist profile
 
 - [apis.yml](https://raw.githubusercontent.com/api-evangelist/tongal/refs/heads/main/apis.yml): APIs.json profile for Tongal
 - [Domain security](https://raw.githubusercontent.com/api-evangelist/tongal/refs/heads/main/security/tongal-domain-security.yml): probed TLS/DNS posture
-- [Well-known probe index](https://raw.githubusercontent.com/api-evangelist/tongal/refs/heads/main/well-known/tongal-well-known.yml): discovery-surface probe results
+- [Well-known + contract discovery probe](https://raw.githubusercontent.com/api-evangelist/tongal/refs/heads/main/well-known/tongal-well-known.yml): full discovery-surface probe results and their statuses
+- [Plans and pricing](https://raw.githubusercontent.com/api-evangelist/tongal/refs/heads/main/plans/tongal-plans-pricing.yml): recorded absence of published pricing
