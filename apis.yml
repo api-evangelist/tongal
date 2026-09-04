@@ -29,14 +29,16 @@ deliveryModel:
   method: derived
 accessModel:
   pricing: unknown
-  onboarding: unknown
+  onboarding: approval
   trial: false
   try_now: false
   public: false
-  label: Unknown
+  label: Requires approval
   confidence: low
-  source: []
-  generated: '2026-07-22'
+  source:
+  - plans
+  - security
+  generated: '2026-09-03'
   method: derived
 specificationVersion: '0.23'
 created: '2026-07-17'
